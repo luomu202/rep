@@ -1,0 +1,18 @@
+server:
+  port: ${PORT:50101} #服务端口,port环境变量如果设置1000,
+                      #那么端口就是1000，如果port从环境变量和参数都没有找到，端口就是50101
+spring:
+  application:
+    name: spring-server-demo #指定服务名称
+eureka:
+  client:
+    register-with-eureka: true  #服务注册，是否将自己注册到Eureka服务,单机false，高可用true
+    fetch-registry: true  #服务发现，单机false，高可用true,要向对方注册，要向对方发现
+    service-url: #Eureka客户端于Eureka服务端交互地址，高可用状态配置对方地址，单机状态配置自己
+    #上报状态（如果不配置则默认本机8761端口）
+      defaultZone: ${EUREKA_SERVER:http://eureka02:50102/eureka/} #eureka02域名，host文件配置
+  server:
+    enable-self-preservation: false #是否开启自我保护模式
+    eviction-interval-timer-in-ms: 60000  #服务注册表清理间隔（默认60*1000）
+  instance:
+    hostname: ${EUREKA_DOMAIN:eureka01} #主机名，域名
